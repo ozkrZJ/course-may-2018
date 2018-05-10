@@ -1,0 +1,74 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<dom-module id="one-component">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            paper-button.indigo {
+                background-color: var(--paper-indigo-500);
+                color: white;
+                --paper-button-raised-keyboard-focus: {
+                    background-color: var(--paper-pink-a200) !important;
+                    color: white !important;
+                };
+            }
+        </style>
+        <h2>Hello [[title]]!</h2>
+
+        <div id="container">
+            <paper-input label="Título" value="{{title}}"></paper-input>
+            <paper-input label="Nombre completo" value="[[fullName]]"></paper-input>
+
+            <paper-button class="indigo" on-click="insertText">Mi botón mágico</paper-button>
+        </div>
+    </template>
+
+    <script>
+        /**
+         * `one-component`
+         *
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class OneComponent extends Polymer.Element {
+            static get is() {
+                return 'one-component';
+            }
+
+            static get properties() {
+                return {
+                    title: {
+                        type: String,
+                        value: ''
+                    },
+                    fullName: {
+                        type: String,
+                        value: ''
+                    }
+                };
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+            }
+
+            insertText(event) {
+                this.set('title', 'mochila');
+                this.dispatchEvent(new CustomEvent('text-append', {
+                    composed: true,
+                    bubbles: true
+                }));
+            }
+        }
+
+        window.customElements.define(OneComponent.is, OneComponent);
+    </script>
+</dom-module>
